@@ -1,0 +1,77 @@
+/* OrderDetails.css */
+.order-details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* To ensure content is spaced out */
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  padding: 20px;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.order-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.order-info {
+  overflow: auto; /* Allows overflow inside the order info */
+  max-height: calc(
+    100vh - 80px
+  ); /* Adjust content height so it fits within the screen */
+  width: 100%;
+}
+
+.address {
+  margin-bottom: 20px;
+}
+
+.order-items {
+  margin-top: 20px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  img {
+    width: 10% !important;
+  }
+}
+
+.payment-info,
+.cancellation-info,
+.return-info {
+  margin-top: 20px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+img {
+  margin-right: 10px;
+}
+
+.order-details {
+  .container {
+    .row {
+      .col-lg-6 {
+        overflow: hidden;
+        &:last-child {
+          overflow: hidden;
+          overflow-y: auto;
+          background-color: rgb(241, 241, 241);
+          height: 70lvh;
+        }
+      }
+    }
+  }
+}
