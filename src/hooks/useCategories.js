@@ -4,15 +4,13 @@ import { getCategories, getCategoryById } from "../api/category.js";
 export const useAllCategories = () =>
   useQuery({
     queryKey: ["category", "all"],
-    queryFn: () => getCategories(null), // all categories
-    staleTime: 5 * 60 * 1000,
+    queryFn: () => getCategories(null),
   });
 
 export const useActiveCategories = () =>
   useQuery({
     queryKey: ["category", "active"],
-    queryFn: () => getCategories(true), // only active ones
-    staleTime: 5 * 60 * 1000,
+    queryFn: () => getCategories(true),
   });
 
 export const useCategory = (id) =>

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
-import { FileQuestion } from "lucide-react";
+import { ShieldX } from "lucide-react";
 
-const NotFound = () => {
+const Unauthorized = () => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -17,13 +17,14 @@ const NotFound = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="text-center px-6 py-12 max-w-md">
         <div className="flex justify-center mb-6">
-          <FileQuestion className="w-24 h-24 text-gray-400" strokeWidth={1.5} />
+          <ShieldX className="w-24 h-24 text-red-500" strokeWidth={1.5} />
         </div>
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          404 - Page Not Found
+          Access Denied
         </h1>
         <p className="text-lg text-gray-600 mb-8">
-          The page you're looking for doesn't exist. It might have been moved or deleted.
+          You don't have permission to access this page. Please contact an
+          administrator if you believe this is an error.
         </p>
         <div className="flex gap-4 justify-center">
           <Button onClick={handleGoBack}>Go Back</Button>
@@ -34,4 +35,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default Unauthorized;

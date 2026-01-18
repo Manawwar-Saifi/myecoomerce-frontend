@@ -17,23 +17,22 @@ export const AuthProvider = ({ children }) => {
     queryKey: ["me"],
     queryFn: getMyProfile,
     retry: false,
-    staleTime: 5 * 60 * 1000,
   });
 
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       setAuthToken(data.token);
-      queryClient.invalidateQueries(["authUser"]);
+      queryClient.invalidateQueries(["me"]);
     },
   });
 
   const logoutMutation = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
-      queryClient.removeQueries(["authUser"]);
+      queryClient.removeQueries(["me"]);
       setAuthToken(null);
-      showSuccess("Logged out successfully"); // optional toast
+      showSuccess("Logged out successfully");
     },
   });
 

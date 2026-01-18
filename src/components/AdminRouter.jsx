@@ -4,12 +4,14 @@ import Navbar from "./admin-components/includes/Navbar";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 import { useState } from "react";
 import { NotificationProvider } from "../contexts/NotificationContext";
+import ScrollToTop from "../utils/ScrollToTop";
 
 export default function AdminLayout() {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
     <NotificationProvider>
+      <ScrollToTop />
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 

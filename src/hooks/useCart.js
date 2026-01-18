@@ -19,7 +19,8 @@ export const useAddToCart = () => {
       return data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries(["cart", variables.userId]);
+      queryClient.invalidateQueries({ queryKey: ["cart", variables.userId] });
+      queryClient.refetchQueries({ queryKey: ["cart", variables.userId] });
       // console.log("Item added to cart");
     },
     onError: (err) => {
@@ -36,13 +37,17 @@ export const useCartByUserId = (userId) => {
     queryKey: ["cart", userId],
     queryFn: async () => {
       const { data } = await axiosInstance.get(`/cart/get/${userId}`);
-      return data.data; // Make sure your backend returns { data: { ...cart } }
+      // console.log("🔧 Raw axios data:", data);
+      // console.log("🔧 Returning data.data:", data.data);
+      // API returns: { data: { message: "...", data: { _id, user, items: [...] } } }
+      // Axios unwraps first level, so data = { message: "...", data: { items: [...] } }
+      // Return data.data to get the cart object: { _id, user, items: [...] }
+      return data.data; // Returns the cart object with items array
     },
     enabled: !!userId,
-    retry: false, // don’t retry on 404
-    onError: (err) => {
-      showError(err?.response?.data?.message || "Failed to load cart");
-    },
+    retry: false,
+    staleTime: 0, // Always fetch fresh data
+    cacheTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
   });
 };
 
@@ -68,7 +73,8 @@ export const useUpdateCartQuantity = () => {
       }
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries(["cart", variables.userId]); // Refetch cart
+      queryClient.invalidateQueries({ queryKey: ["cart", variables.userId] });
+      queryClient.refetchQueries({ queryKey: ["cart", variables.userId] });
       showSuccess("Cart updated");
     },
     onError: (err) => {
@@ -91,7 +97,8 @@ export const useRemoveFromCart = () => {
       return data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries(["cart", variables.userId]);
+      queryClient.invalidateQueries({ queryKey: ["cart", variables.userId] });
+      queryClient.refetchQueries({ queryKey: ["cart", variables.userId] });
       showSuccess("Item removed from cart");
     },
     onError: (err) => {

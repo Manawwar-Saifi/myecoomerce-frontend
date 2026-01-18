@@ -54,7 +54,7 @@ const Review = ({ pid }) => {
             {reviews.map((review, idx) => (
               <div
                 key={review._id || idx}
-                className="bg-white shadow rounded-lg p-4 flex flex-col sm:flex-row sm:items-center gap-2 border border-gray-200"
+                className="bg-white shadow rounded-lg p-4 flex flex-col sm:flex-row sm:items-center gap-2 border border-gray-200 my-3"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">

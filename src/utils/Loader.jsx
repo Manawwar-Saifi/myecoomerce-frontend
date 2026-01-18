@@ -1,16 +1,10 @@
-// Loader.js
-// import { useLoader } from "../contexts/LoaderContext.jsx";
 export default function Loader() {
-  // const { loading } = useLoader();
-
-  // if (!loading) return null;
   return (
-    <div
-      style={{ textAlign: "center", padding: "20px" }}
-      className="loaderPage"
-    >
-      <p>Loading...</p>
-      <div className="custom-loader"></div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="text-center">
+        <div className="custom-loader mb-4"></div>
+        <p className="text-gray-600 text-lg">Loading...</p>
+      </div>
     </div>
   );
 }

@@ -2,14 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProducts, getSingleProduct } from "../api/product.js";
 
 import axiosInstance from "../lib/axiosInstance.js";
-export const useProducts = ({ page = 1, limit = 12, active = true }) => {
+export const useProducts = ({
+  page = 1,
+  limit = 12,
+  active = true,
+  keyword = "",
+  category = "",
+  min = "",
+  max = "",
+  sort = "-createdAt",
+}) => {
   return useQuery({
-    queryKey: ["products", page, limit, active],
-    queryFn: () => getAllProducts({ page, limit, active }),
-    staleTime: 1000 * 60 * 60, // ✅ 1 hour (change as needed)
-    cacheTime: 1000 * 60 * 60 * 2, // ✅ Cache for 2 hours
-    refetchOnWindowFocus: false,
-    refetchOnMount: false, // ✅ Prevent refetch on reload
+    queryKey: ["products", page, limit, active, keyword, category, min, max, sort],
+    queryFn: () => getAllProducts({ page, limit, active, keyword, category, min, max, sort }),
+    keepPreviousData: true, // Keep previous data while fetching new data for smoother UX
   });
 };
 

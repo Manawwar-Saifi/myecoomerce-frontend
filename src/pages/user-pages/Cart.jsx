@@ -102,6 +102,10 @@ const Cart = () => {
     navigate("/products");
   };
 
+  useEffect(() => {
+    console.log(cart.data.items, "cartpagechecking");
+  }, []);
+
   return (
     <section className="mainCartDiv">
       <div className="container">
@@ -110,7 +114,7 @@ const Cart = () => {
           <div className="col-lg-8">
             <div className="innerDiv">
               <div className="ulDiv">
-                {cart?.data?.items?.length === 0 ? (
+                {!cart?.data?.items || cart?.data?.items?.length === 0 ? (
                   <div className="text-center py-5">
                     <p className="text-gray-600 mb-4">Your cart is empty.</p>
                     <button
@@ -128,7 +132,7 @@ const Cart = () => {
                       <h6 className="col-lg-2 text-end">Quantity</h6>
                       <h6 className="col-lg-4 text-center">Total</h6>
                     </li>
-                    {cart?.data?.items.map((item, index) => (
+                    {cart?.data?.items?.map((item, index) => (
                       <div key={index + 1}>
                         <li
                           className="row bodyLi align-items-center"
@@ -193,9 +197,7 @@ const Cart = () => {
               </div>
             </div>
           </div>
-          {cart?.data?.items?.length === 0 ? (
-            ""
-          ) : (
+          {!cart?.data?.items || cart?.data?.items?.length === 0 ? null : (
             <>
               {/* Right: Summary */}
               <div className="col-lg-4 totalDetailRight">

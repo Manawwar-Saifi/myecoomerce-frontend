@@ -1,7 +1,6 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import {
   createRoutesFromElements,
-  Routes,
   Route,
   RouterProvider,
   createBrowserRouter,
@@ -11,6 +10,7 @@ import UserLayout from "./components/UserRouter.jsx";
 import AdminLayout from "./components/AdminRouter.jsx";
 import Loader from "./utils/Loader";
 import ProtectedRoute from "@/utils/ProtectedRoute";
+import ErrorBoundary from "./components/ErrorBoundary";
 // 🔄 Lazy Load Pages - Admin
 const Dashboard = lazy(() => import("./pages/admin-pages/Dashboard"));
 const Orders = lazy(() => import("./pages/admin-pages/Orders"));
@@ -52,6 +52,7 @@ const ForgetPassword1 = lazy(() =>
   import("./pages/user-pages/ForgetPassword1")
 );
 const OtpVerify = lazy(() => import("./pages/user-pages/OtpVerify"));
+const Unauthorized = lazy(() => import("./pages/user-pages/Unauthorized"));
 
 // 🛠️ Router Setup
 const router = createBrowserRouter(
@@ -66,6 +67,7 @@ const router = createBrowserRouter(
         <Route path="forget-password" element={<ForgetPassword1 />} />
         <Route path="otp-verify" element={<OtpVerify />} />
         <Route path="about" element={<About />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<NotFound />} />
         {/* Public browsing routes */}
         <Route path="products" element={<UserProducts />} />
@@ -140,9 +142,11 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <Suspense fallback={<Loader />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<Loader />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 

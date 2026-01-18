@@ -53,14 +53,15 @@ const Checkout = () => {
     }
   }, [userId, user?.id, navigate]);
 
-  if (isLoading) return <Loader />;
-  if (!cart) return null;
   useEffect(() => {
     if (!isLoading && cart && !cart?.data?.items?.length) {
       showInfo("Your cart is empty. Add items to proceed to checkout.");
       navigate(`/cart/${user?.id}`);
     }
-  }, [cart, isLoading, navigate]);
+  }, [cart, isLoading, navigate, user?.id]);
+
+  if (isLoading) return <Loader />;
+  if (!cart) return null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -146,9 +147,14 @@ const Checkout = () => {
           body: JSON.stringify(initialOrderData),
         }
       );
-      console.log(await response, "first 111");
 
-      const { order, razorpayOrder } = response.data;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to initiate order");
+      }
+
+      const responseData = await response.json();
+      const { order, razorpayOrder } = responseData;
       orderIdFromBackend = order._id;
       razorpayOrderId = razorpayOrder.id;
       amountFromBackend = razorpayOrder.amount;
@@ -156,10 +162,7 @@ const Checkout = () => {
       showSuccess("Order created. Opening Razorpay...");
     } catch (err) {
       console.error("❌ Order creation failed:", err);
-      showError(
-        err?.response?.data?.message ||
-          "Failed to initiate order. Please try again."
-      );
+      showError(err.message || "Failed to initiate order. Please try again.");
       return;
     }
 
@@ -522,7 +525,7 @@ const Checkout = () => {
             </div>
 
             {/* Conditional Buttons based on payment method */}
-            {formData.paymentMethod === "COD" ? (
+            {formData.paymentMethod === "cod" ? (
               <button
                 type="button"
                 onClick={handleCODSubmit}

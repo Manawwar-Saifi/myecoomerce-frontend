@@ -14,8 +14,12 @@ import { NotificationProvider } from "./contexts/NotificationContext.jsx";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 60, // 1 hour
-      cacheTime: 1000 * 60 * 60 * 2, // 2 hours
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 minutes
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      retry: 1,
     },
   },
 });
@@ -29,7 +33,7 @@ const localStoragePersister = createSyncStoragePersister({
 persistQueryClient({
   queryClient,
   persister: localStoragePersister,
-  maxAge: 1000 * 60 * 60 * 2, // 2 hours
+  maxAge: 1000 * 60 * 30, // 30 minutes
 });
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>

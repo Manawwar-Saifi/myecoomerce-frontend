@@ -119,7 +119,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -130,7 +130,7 @@ const Dashboard = () => {
                 Welcome back! Here's what's happening with your store today.
               </p>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 mb-4">
               <div
                 className={`p-3 rounded-lg ${
                   unreadCount > 0 ? "bg-red-50" : "bg-blue-50"
@@ -160,15 +160,15 @@ const Dashboard = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-3">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+              className="bg-white rounded-xl shadow-sm border border-gray-200 p-3 bg-red-500"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">
+                  <p className="text-sm font-medium text-gray-600 m-0">
                     {stat.title}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 mt-2">
@@ -199,9 +199,9 @@ const Dashboard = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Recent Orders */}
-          <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 mb-3">
             <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between px-3 py-2">
                 <h2 className="text-lg font-semibold text-gray-900">
                   Recent Orders
                 </h2>
@@ -215,11 +215,11 @@ const Dashboard = () => {
                 {recentOrders.map((order, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-lg"
                   >
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-start space-x-4 gap-2">
                       <div
-                        className={`p-2 rounded-full ${getStatusColor(
+                        className={`px-2 py-1 mx-2 rounded-full ${getStatusColor(
                           order.status
                         )}`}
                       >
@@ -228,7 +228,7 @@ const Dashboard = () => {
                         </span>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-gray-900 m-0 mb-1">
                           {order.id}
                         </p>
                         <p className="text-sm text-gray-600">
@@ -237,10 +237,12 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-gray-900 m-0">
                         {order.amount}
                       </p>
-                      <p className="text-sm text-gray-600">{order.date}</p>
+                      <p className="text-sm text-gray-600 m-0 mb-1">
+                        {order.date}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -249,8 +251,8 @@ const Dashboard = () => {
           </div>
 
           {/* Top Products */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-3">
+            <div className="p-6 border-b border-gray-200 px-3 py-2">
               <h2 className="text-lg font-semibold text-gray-900">
                 Top Products
               </h2>
@@ -260,21 +262,23 @@ const Dashboard = () => {
                 {topProducts.map((product, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between"
+                    className="flex items-center justify-between px-3"
                   >
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">
+                    <div className="flex-1 mt-2">
+                      <p className="text-sm font-medium text-gray-900 m-0 mb-2">
                         {product.name}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 m-0 mb-2">
                         {product.sales} sales
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                    <div className="text-right mt-3">
+                      <p className="text-sm font-medium text-gray-900 m-0 mb-2">
                         {product.revenue}
                       </p>
-                      <p className="text-sm text-green-600">{product.growth}</p>
+                      <p className="text-sm text-green-600 m-0 mb-2">
+                        {product.growth}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -284,15 +288,15 @@ const Dashboard = () => {
         </div>
 
         {/* Additional Analytics */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 mb-3">
           {/* Sales Chart */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 p-3">
               Sales Overview
             </h3>
             <div className="space-y-4">
               {/* Custom Bar Chart */}
-              <div className="flex items-end space-x-2 h-32">
+              <div className="flex items-end space-x-2 h-32 pb-3">
                 {[65, 78, 90, 81, 56, 55, 40].map((value, index) => (
                   <div
                     key={index}
@@ -316,10 +320,10 @@ const Dashboard = () => {
 
           {/* Performance Metrics */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 p-3">
               Performance Metrics
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-4 p-3">
               <div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm font-medium text-gray-700">
@@ -367,11 +371,11 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-3">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 p-3">
             Quick Actions
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-3">
             <button className="flex flex-col items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
               <div className="w-8 h-8 text-blue-600 mb-2 text-2xl">📦</div>
               <span className="text-sm font-medium text-blue-900">
@@ -401,38 +405,38 @@ const Dashboard = () => {
 
         {/* Recent Activity */}
         <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 p-3">
             Recent Activity
           </h3>
           <div className="space-y-4">
-            <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+            <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg gap-3">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 mb-0">
                   New order #3211 received from John Smith
                 </p>
                 <p className="text-xs text-gray-600">2 minutes ago</p>
               </div>
             </div>
-            <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+            <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg gap-3">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900  mb-0">
                   Product "Wireless Headphones" stock updated
                 </p>
                 <p className="text-xs text-gray-600">15 minutes ago</p>
               </div>
             </div>
-            <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+            <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg gap-3">
               <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 mb-0">
                   New customer registration: Sarah Johnson
                 </p>
                 <p className="text-xs text-gray-600">1 hour ago</p>
               </div>
             </div>
-          </div>
+          </div>``
         </div>
       </div>
     </div>

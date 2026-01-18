@@ -131,10 +131,10 @@ const Home = () => {
                           No categories found.
                         </p>
                       ) : (
-                        categories.slice(0, ).map((cat) => (
+                        categories.slice(0, 6).map((cat) => (
                           <div key={cat._id}>
                             <NavLink
-                              to={`category/${cat._id}`}
+                              to={`/category-single/${cat._id}`}
                               className="flex flex-col items-center justify-center bg-white rounded-xl shadow-md transform transition-transform hover:scale-105 duration-300 text-indigo-600 hover:text-indigo-700"
                             >
                               <img

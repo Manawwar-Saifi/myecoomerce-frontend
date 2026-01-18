@@ -8,6 +8,12 @@ import { useAuth } from "../../contexts/AuthContext";
 import { handleAddToCart } from "../../utils/AddToCartFun.jsx";
 import Review from "./Review.jsx";
 import AddReview from "./AddReview.jsx";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
 // Mock related products data
 const relatedProducts = [
   {
@@ -47,6 +53,7 @@ const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   // Handle Add to cart
   const { user } = useAuth(); // Get logged-in user from context
@@ -127,34 +134,75 @@ const SingleProduct = () => {
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-5  ">
-          {/* Product Image Gallery */}
+          {/* Product Image Gallery with Swiper */}
           <div className="flex flex-col items-center">
-            <img
-              src={product.image || placeholder}
-              alt={product.name}
-              className="w-full max-w-lg h-auto rounded-lg shadow-md object-cover mb-4"
-            />
-            <div className="flex space-x-2 overflow-x-auto p-2">
-              {product.additionalImages.length === 0 ? (
+            {/* Main Swiper */}
+            <Swiper
+              style={{
+                "--swiper-navigation-color": "#fff",
+                "--swiper-pagination-color": "#fff",
+              }}
+              loop={true}
+              spaceBetween={10}
+              navigation={true}
+              thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="w-full max-w-lg mb-4 rounded-lg shadow-md"
+            >
+              {/* Main product image */}
+              <SwiperSlide>
                 <img
-                  src={placeholder}
+                  src={product.image || placeholder}
                   alt={product.name}
-                  className="w-20 h-20 rounded mx-2"
+                  className="w-full h-auto object-cover rounded-lg"
                 />
-              ) : (
+              </SwiperSlide>
+
+              {/* Additional images */}
+              {product.additionalImages.length > 0 &&
                 product.additionalImages.map((img, index) => (
-                  <div key={index + 1} className="flex flex-wrap">
+                  <SwiperSlide key={index}>
                     <img
-                      key={index + 1}
                       src={img.url}
-                      alt={`${product.name} ${img.publicId}`}
-                      className={`object-cover rounded-md cursor-pointer border-2 mx-2 my-2`}
-                      style={{ width: "100px" }}
+                      alt={`${product.name} ${index + 1}`}
+                      className="w-full h-auto object-cover rounded-lg"
                     />
-                  </div>
-                ))
-              )}
-            </div>
+                  </SwiperSlide>
+                ))}
+            </Swiper>
+
+            {/* Thumbnails Swiper */}
+            <Swiper
+              onSwiper={setThumbsSwiper}
+              loop={true}
+              spaceBetween={10}
+              slidesPerView={4}
+              freeMode={true}
+              watchSlidesProgress={true}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="w-full max-w-lg"
+            >
+              {/* Main product image thumbnail */}
+              <SwiperSlide>
+                <img
+                  src={product.image || placeholder}
+                  alt={product.name}
+                  className="w-full h-20 object-cover rounded-md cursor-pointer border-2 border-gray-300 hover:border-blue-500"
+                />
+              </SwiperSlide>
+
+              {/* Additional images thumbnails */}
+              {product.additionalImages.length > 0 &&
+                product.additionalImages.map((img, index) => (
+                  <SwiperSlide key={index}>
+                    <img
+                      src={img.url}
+                      alt={`${product.name} thumb ${index + 1}`}
+                      className="w-full h-20 object-cover rounded-md cursor-pointer border-2 border-gray-300 hover:border-blue-500"
+                    />
+                  </SwiperSlide>
+                ))}
+            </Swiper>
           </div>
 
           {/* Product Details */}
@@ -239,7 +287,7 @@ const SingleProduct = () => {
           </div>
         </div>
 
-        <div className="single-page-all-review">
+        <div className="single-page-all-review ">
           <Review pid={id} />
         </div>
 
